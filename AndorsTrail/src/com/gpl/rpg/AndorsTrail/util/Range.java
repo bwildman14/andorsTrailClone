@@ -94,9 +94,4 @@ public final class Range {
 		this.max = src.readInt();
 		this.current = src.readInt();
 	}
-
-	public void writeToParcel(DataOutputStream dest) throws IOException {
-		dest.writeInt(max);
-		dest.writeInt(current);
-	}
 }

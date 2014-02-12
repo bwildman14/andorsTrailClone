@@ -3,6 +3,7 @@ package com.gpl.rpg.AndorsTrail.model.actor;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.model.ability.ActorCondition;
 import com.gpl.rpg.AndorsTrail.model.ability.SkillCollection;
+import com.gpl.rpg.AndorsTrail.model.io.RangeWriter;
 import com.gpl.rpg.AndorsTrail.model.item.DropList;
 import com.gpl.rpg.AndorsTrail.model.item.ItemContainer;
 import com.gpl.rpg.AndorsTrail.model.item.Loot;
@@ -146,6 +147,7 @@ public final class Monster extends Actor {
 		}
 	}
 
+    RangeWriter rangeWriter = new RangeWriter();
 	public void writeToParcel(DataOutputStream dest) throws IOException {
 		dest.writeUTF(getMonsterTypeID());
 		if (attackCost == monsterType.attackCost
@@ -163,12 +165,12 @@ public final class Monster extends Actor {
 			dest.writeInt(attackChance);
 			dest.writeInt(criticalSkill);
 			dest.writeFloat(criticalMultiplier);
-			damagePotential.writeToParcel(dest);
+			rangeWriter.writeToParcel(damagePotential, dest);
 			dest.writeInt(blockChance);
 			dest.writeInt(damageResistance);
 		}
-		ap.writeToParcel(dest);
-		health.writeToParcel(dest);
+        rangeWriter.writeToParcel(ap, dest);
+        rangeWriter.writeToParcel(health, dest);
 		position.writeToParcel(dest);
 		dest.writeInt(conditions.size());
 		for (ActorCondition c : conditions) {

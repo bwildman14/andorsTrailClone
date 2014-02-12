@@ -36,16 +36,16 @@ public final class Player extends Actor {
 	public final PlayerBaseTraits baseTraits = new PlayerBaseTraits();
 	public final Range levelExperience; // ranges from 0 to the delta-amount of exp required for next level
 	public final Inventory inventory;
-	private final SparseIntArray skillLevels = new SparseIntArray();
+    public final SparseIntArray skillLevels = new SparseIntArray();
 	public int availableSkillIncreases = 0;
 	public int useItemCost;
 	public int reequipCost;
 	public int totalExperience;
 
-	private final HashMap<String, HashSet<Integer> > questProgress = new HashMap<String, HashSet<Integer> >();
-	private String spawnMap;
-	private String spawnPlace;
-	private final HashMap<String, Integer> alignments = new HashMap<String, Integer>();
+    public final HashMap<String, HashSet<Integer> > questProgress = new HashMap<String, HashSet<Integer> >();
+    public String spawnMap;
+    public String spawnPlace;
+    public final HashMap<String, Integer> alignments = new HashMap<String, Integer>();
 
 	// Unequipped stats
 	public static final class PlayerBaseTraits {
@@ -356,56 +356,5 @@ public final class Player extends Actor {
 		}
 	}
 
-	public void writeToParcel(DataOutputStream dest) throws IOException {
-		dest.writeInt(baseTraits.iconID);
-		dest.writeInt(baseTraits.maxAP);
-		dest.writeInt(baseTraits.maxHP);
-		dest.writeUTF(name);
-		dest.writeInt(moveCost); // TODO: Should we really write this?
-		dest.writeInt(baseTraits.attackCost);
-		dest.writeInt(baseTraits.attackChance);
-		dest.writeInt(baseTraits.criticalSkill);
-		dest.writeFloat(baseTraits.criticalMultiplier);
-		baseTraits.damagePotential.writeToParcel(dest);
-		dest.writeInt(baseTraits.blockChance);
-		dest.writeInt(baseTraits.damageResistance);
-		dest.writeInt(baseTraits.moveCost);
-
-		ap.writeToParcel(dest);
-		health.writeToParcel(dest);
-		position.writeToParcel(dest);
-		dest.writeInt(conditions.size());
-		for (ActorCondition c : conditions) {
-			c.writeToParcel(dest);
-		}
-		lastPosition.writeToParcel(dest);
-		nextPosition.writeToParcel(dest);
-		dest.writeInt(level);
-		dest.writeInt(totalExperience);
-		inventory.writeToParcel(dest);
-		dest.writeInt(baseTraits.useItemCost);
-		dest.writeInt(baseTraits.reequipCost);
-		dest.writeInt(skillLevels.size());
-		for (int i = 0; i < skillLevels.size(); ++i) {
-			dest.writeInt(skillLevels.keyAt(i));
-			dest.writeInt(skillLevels.valueAt(i));
-		}
-		dest.writeUTF(spawnMap);
-		dest.writeUTF(spawnPlace);
-		dest.writeInt(questProgress.size());
-		for(Entry<String, HashSet<Integer> > e : questProgress.entrySet()) {
-			dest.writeUTF(e.getKey());
-			dest.writeInt(e.getValue().size());
-			for(int progress : e.getValue()) {
-				dest.writeInt(progress);
-			}
-		}
-		dest.writeInt(availableSkillIncreases);
-		dest.writeInt(alignments.size());
-		for(Entry<String, Integer> e : alignments.entrySet()) {
-			dest.writeUTF(e.getKey());
-			dest.writeInt(e.getValue());
-		}
-	}
 }
 

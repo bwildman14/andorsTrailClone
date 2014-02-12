@@ -3,6 +3,7 @@ package com.gpl.rpg.AndorsTrail.model;
 import com.gpl.rpg.AndorsTrail.context.ControllerContext;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.model.actor.Player;
+import com.gpl.rpg.AndorsTrail.model.io.PlayerWriter;
 import com.gpl.rpg.AndorsTrail.model.map.LayeredTileMap;
 import com.gpl.rpg.AndorsTrail.model.map.PredefinedMap;
 
@@ -46,7 +47,10 @@ public final class ModelContainer {
 	}
 
 	public void writeToParcel(DataOutputStream dest) throws IOException {
-		player.writeToParcel(dest);
+
+        PlayerWriter writer = new PlayerWriter();
+        writer.writeToParcel(player, dest);
+
 		dest.writeUTF(currentMap.name);
 		uiSelections.writeToParcel(dest);
 		statistics.writeToParcel(dest);

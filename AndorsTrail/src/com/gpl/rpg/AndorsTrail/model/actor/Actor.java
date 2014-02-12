@@ -18,8 +18,8 @@ public class Actor {
 	public final Coord position = new Coord();
 	public final CoordRect rectPosition;
 	public final boolean isPlayer;
-	private final boolean isImmuneToCriticalHits;
-	protected String name;
+    public final boolean isImmuneToCriticalHits;
+    public String name;
 
 	// TODO: Should be privates
 	public final Range ap = new Range();
